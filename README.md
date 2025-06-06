@@ -1,98 +1,220 @@
-# SRT Translator with Ollama
+# 🎬 SRT Translator - Modern Interface
 
-A simple and efficient tool to translate SRT subtitle files using Ollama and the gemma3:12b model.
+An advanced and modern tool to translate your SRT subtitle files with **Ollama**, featuring an intuitive web interface and professional capabilities.
 
-## Prerequisites
+## ✨ Features
 
-1. **Python 3.7+** installed on your system
-2. **Ollama** installed and running with the gemma3:12b model
-3. Internet connection to download Python dependencies
+### 🌐 Modern Web Interface (Streamlit)
+- **Clean and responsive** graphical interface
+- **Multilingual support** (French/English) with instant switching
+- **Intuitive drag & drop** for files
+- **Real-time progress** with line-by-line details
+- **Cancellation function** at any time
+- **File preview** before and after translation
 
-## Installation
+### 📦 Processing Modes
+- **📄 Single file** : Translation of one SRT file
+- **🔄 Batch processing** : Translation of multiple files simultaneously
+- **📥 ZIP download** : Automatic archive for batch processing
 
-1. Clone or download this project
-2. Make sure Ollama is running:
-   ```bash
-   ollama serve
-   ```
-3. Verify that the gemma3:12b model is available:
-   ```bash
-   ollama list
-   ```
-   If not installed, download it:
-   ```bash
-   ollama pull gemma3:12b
-   ```
+### 🎯 Advanced Features
+- **Detailed progress** : `"5/342 : <text being translated>"`
+- **Robust error handling** with explicit messages
+- **Multiple encoding support** (UTF-8, CP1252, Latin-1)
+- **Timing and numbering preservation** in SRT format
+- **Smart naming convention** : `filename-FR.srt`
 
-## Usage
+## 🚀 Installation
 
-### Simple method (Windows)
+### Prerequisites
+- **Python 3.9+**
+- **Ollama** installed and running
+- **gemma3:12b** model (or another model of your choice)
 
-Use the provided batch script:
-
+### Install Dependencies
 ```bash
-# Translation from English to French (default)
-translate.bat my_file.srt my_file_fr.srt
-
-# Translation with specific languages
-translate.bat my_file.srt my_file_es.srt english spanish
-```
-
-### Direct Python method
-
-```bash
-# Install dependencies
 pip install -r requirements.txt
-
-# Basic usage
-python srt_translator.py input.srt output.srt
-
-# With options
-python srt_translator.py input.srt output.srt --source english --target french
-python srt_translator.py input.srt output.srt -s english -t spanish
 ```
 
-## Available options
+### Ollama Configuration
+```bash
+# Start Ollama
+ollama serve
 
-- `--source` or `-s`: Source language (default: english)
-- `--target` or `-t`: Target language (default: french)  
-- `--url`: Ollama URL (default: http://localhost:11434)
+# Check/install model
+ollama list
+ollama pull gemma3:12b  # If needed
+```
 
-## Usage examples
+## 🎮 Usage
 
+### 🌟 Web Interface (Recommended)
+
+#### Quick Start
+```bash
+# Windows
+run_streamlit.bat
+
+# Command line
+python -m streamlit run streamlit_app.py
+```
+
+#### Web Interface Workflow
+1. **🌐 Choose interface language** (FR/EN)
+2. **⚙️ Configure Ollama** in the sidebar
+3. **📂 Select mode** : Single file or Batch
+4. **📁 Upload** your SRT files
+5. **🌍 Define** source/target languages
+6. **🚀 Start** translation
+7. **📥 Download** the result
+
+### 📋 Command Line Interface
+
+#### Single file
+```bash
+python srt_translator.py input.srt output.srt --source english --target french
+```
+
+#### With advanced options
+```bash
+python srt_translator.py movie.srt movie_fr.srt \
+  --source english \
+  --target french \
+  --url http://localhost:11434
+```
+
+## 🎯 Usage Examples
+
+### Web Interface - Batch Mode
+1. Select **"Batch processing"**
+2. Upload multiple files: `episode01.srt`, `episode02.srt`, `episode03.srt`
+3. Choose: **English** → **French**
+4. Click **"Start translation"**
+5. Download: `subtitles-FR.zip` containing:
+   - `episode01-FR.srt`
+   - `episode02-FR.srt` 
+   - `episode03-FR.srt`
+
+### Web Interface - Detailed Progress
+```
+🔄 Batch processing (1/3): episode01.srt
+127/342 : Hello, how are you doing today?
+[████████████░░░░░░░░░] 45%   [🛑 Cancel]
+```
+
+### Command Line - Examples
 ```bash
 # English to French
 python srt_translator.py movie_en.srt movie_fr.srt
 
-# French to Spanish
-python srt_translator.py movie_fr.srt movie_es.srt --source french --target spanish
+# French to Spanish  
+python srt_translator.py movie_fr.srt movie_es.srt -s french -t spanish
 
-# English to German
-python srt_translator.py series_en.srt series_de.srt -s english -t german
+# With custom Ollama URL
+python srt_translator.py series.srt series_de.srt --url http://192.168.1.100:11434
 ```
 
-## Features
+## ⚙️ Configuration
 
-- ✅ Automatically parses SRT files
-- ✅ Preserves timing and numbering
-- ✅ Handles different encodings (UTF-8, CP1252, Latin-1)
-- ✅ Shows translation progress
-- ✅ Uses local Ollama (no external API needed)
-- ✅ Simple command-line interface
+### Supported Languages
+- **french**, **english**, **spanish**, **italian**, **german**
+- **portuguese**, **chinese**, **japanese**, **korean**, **russian**
 
-## Troubleshooting
+### Recommended Ollama Models
+- `gemma3:12b` (default, accurate)
+- `gemma3:2b` (faster)
+- `llama3.2` (alternative)
+- `qwen2.5` (advanced multilingual)
 
-### Ollama is not accessible
-- Check that Ollama is running: `ollama serve`
-- Verify that port 11434 is not blocked
+### File Structure
+```
+srt-translator/
+├── streamlit_app.py          # Modern web interface
+├── srt_translator.py         # Translation module
+├── run_streamlit.bat         # Windows launcher
+├── translate.bat             # Command line launcher
+├── requirements.txt          # Python dependencies
+└── README.md                # This file
+```
 
-### Model error
-- Make sure gemma3:12b is installed: `ollama pull gemma3:12b`
+## 🔧 Advanced Options
 
-### Encoding error
-- The tool automatically tries multiple encodings
-- If the problem persists, convert your SRT file to UTF-8
+### Interface Variables
+- **Processing mode** : Single or Batch
+- **Interface language** : French/English
+- **Ollama URL** : Configurable in interface
+- **Model** : Dynamically selectable
 
-### Slow performance
-- The gemma3:12b model is large, translation may take time
-- For a faster version, you can modify the script to use a smaller model like `gemma3:2b` 
+### Command Line Parameters
+```bash
+python srt_translator.py [INPUT_FILE] [OUTPUT_FILE] [OPTIONS]
+
+Options:
+  --source, -s    Source language (default: english)
+  --target, -t    Target language (default: french)  
+  --url          Ollama URL (default: http://localhost:11434)
+```
+
+## 🚨 Troubleshooting
+
+### Web Interface
+**Port already in use:**
+```bash
+python -m streamlit run streamlit_app.py --server.port 8502
+```
+
+**Ollama not accessible:**
+- Test connection via button in interface
+- Check that Ollama is started: `ollama serve`
+
+### Command Line
+**Model error:**
+```bash
+ollama pull gemma3:12b
+```
+
+**Encoding issue:**
+- Tool automatically tries multiple encodings
+- Convert to UTF-8 if necessary
+
+### Performance
+- **gemma3:12b** : Accurate but slower
+- **gemma3:2b** : Faster for testing
+- Use **smaller files** for testing
+
+## 📈 Technical Features
+
+### Streamlit Interface
+- **Real-time progress callbacks**
+- **State management** with `session_state`
+- **Multiple upload** with validation
+- **Automatic ZIP download**
+- **Custom CSS** for design
+
+### Intelligent Processing
+- **Robust SRT parser** with regex
+- **Granular error handling** per file
+- **Automatic cleanup** of temporary files
+- **Standardized naming convention**
+
+### Modular Architecture
+- **Separation of concerns** : UI / Logic
+- **Callbacks** for progress/cancellation
+- **Cross-platform support** Windows/Linux/Mac
+- **Complete internationalization**
+
+## 🤝 Contributing
+
+This project is designed to be easily extensible:
+- Add languages in `TRANSLATIONS`
+- Integrate other Ollama models
+- Customize CSS interface
+- Extend subtitle formats
+
+## 📄 License
+
+Open source project - Use and modify freely!
+
+---
+
+**🎬 Enjoy your translated subtitles with style!** 
